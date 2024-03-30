@@ -13,5 +13,5 @@ Route::middleware([
         return view('dashboard');
     })->name('dashboard');
 
-    Route::get('products',fn () => view('dashboard'))->name('products');
+    Route::get('products',[\App\Http\Controllers\Admin\ProductController::class, 'index'])->name('products');
 });
