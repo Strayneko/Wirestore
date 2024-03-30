@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('full_path');
-            $table->string('size');
+            $table->integer('size');
             $table->string('extension');
             $table->timestamps();
         });
