@@ -1,7 +1,8 @@
 <header class="py-4 shadow-sm bg-white">
     <div class="container flex items-center justify-between">
-        <a href="index.html">
-            <img src="assets/images/logo.svg" alt="Logo" class="w-32">
+        <a href="{{ route('home') }}" class="uppercase">
+           <span class="font-bold text-3xl text-primary">wire</span>
+           <span class="font-bold text-3xl">store</span>
         </a>
 
         <div class="flex items-center space-x-4">

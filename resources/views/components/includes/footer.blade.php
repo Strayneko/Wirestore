@@ -1,7 +1,11 @@
 <footer class="bg-white pt-16 pb-12 border-t border-gray-100">
     <div class="container grid grid-cols-1 ">
         <div class="col-span-1 space-y-4">
-            <img src="assets/images/logo.svg" alt="logo" class="w-30">
+            <span class="uppercase">
+                <span class="font-bold text-3xl text-primary">wire</span>
+                <span class="font-bold text-3xl">store</span>
+            </span>
+
             <div class="mr-2">
                 <p class="text-gray-500">
                     Lorem ipsum dolor sit amet consectetur adipisicing elit. Quia, hic?
