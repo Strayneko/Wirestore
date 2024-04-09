@@ -23,7 +23,7 @@
     </div>
     <div class="pt-4 pb-3 px-4">
         <a href="#">
-            <h4 class="uppercase font-medium text-xl mb-2 text-gray-800 hover:text-primary transition">Guyer
+            <h4 class="uppercase font-medium text-lg mb-2 text-gray-800 hover:text-primary transition">Guyer
                 Chair</h4>
         </a>
         <div class="flex items-baseline mb-1 space-x-2">
