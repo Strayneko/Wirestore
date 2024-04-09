@@ -11,7 +11,9 @@ export default {
         './resources/views/**/*.blade.php',
         './node_modules/flowbite/**/*.js',
     ],
-
+    safelist: [
+        'lg:max-w-3xl',
+    ],
     theme: {
         screen: {
             sm: "576px",
