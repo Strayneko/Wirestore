@@ -22,4 +22,13 @@ class Product extends Model
     {
         return $this->belongsTo(Category::class);
     }
+
+    /**
+     * Relationship to get product image
+     * @return HasOne
+     */
+    public function image(): BelongsTo
+    {
+        return $this->belongsTo(Images::class);
+    }
 }
