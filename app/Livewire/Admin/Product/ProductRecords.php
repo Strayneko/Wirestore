@@ -2,9 +2,7 @@
 
 namespace App\Livewire\Admin\Product;
 
-use App\Models\Product;
-use Illuminate\Pagination\LengthAwarePaginator;
-use Livewire\Attributes\Computed;
+use App\Service\ProductService;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -12,9 +10,16 @@ class ProductRecords extends Component
 {
     use WithPagination;
 
+    private ?ProductService $productService = null;
+
+    public function boot(): void
+    {
+        $this->productService = new ProductService();
+    }
+
     public function render()
     {
-        $products = Product::query()->with('category')->latest()->paginate(10);
+        $products = $this->productService->fetchProducts();
         return view('livewire.admin.product.product-records', compact('products'));
     }
 }
