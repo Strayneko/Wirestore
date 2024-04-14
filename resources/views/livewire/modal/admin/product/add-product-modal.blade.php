@@ -2,7 +2,7 @@
     <form action="" class="space-y-5" wire:submit.prevent="addProduct()">
         <div class="space-y-1">
             <x-label value="Name" required />
-            <x-input class="w-full" placeholder="Product Name" wire:model.live.debounce="form.name" />
+            <x-input class="w-full" placeholder="Product Name" wire:model.live.debounce.500ms="form.name" />
             <x-input-error for="form.name" />
         </div>
     <div class="space-y-1">
@@ -25,13 +25,35 @@
 
         <div class="space-y-1">
             <x-label value="Description" required />
-            <textarea wire:model="form.description" rows="4" class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Write your thoughts here..."></textarea>
+            <textarea wire:model="form.description"
+                      rows="4"
+                      class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                      placeholder="Describe your products here..."></textarea>
         </div>
 
-        <div>
+        <div x-data="{ uploading: false, progress: 0 }"
+            x-on:livewire-upload-start="uploading = true"
+            x-on:livewire-upload-finish="uploading = false, progress = 0"
+            x-on:livewire-upload-cancel="uploading = false, progress = 0"
+            x-on:livewire-upload-error="uploading = false, progress = 0"
+            x-on:livewire-upload-progress="progress = $event.detail.progress"
+        >
             <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white" for="file_input">Upload file</label>
-            <input wire:model="form.image" class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none file:!bg-blue-600" aria-describedby="file_input_help" id="file_input" type="file">
-            <p class="mt-1 text-sm text-gray-500 dark:text-gray-300" id="file_input_help">SVG, PNG, JPG or GIF (MAX. 800x400px).</p>
+
+            <div x-show="uploading" x-cloak>
+                <div class="flex justify-between mb-1">
+                    <span class="text-base font-medium text-blue-700 dark:text-white">Uploading image</span>
+                    <span class="text-sm font-medium text-blue-700 dark:text-white" x-text="`${progress}%`">0%</span>
+                </div>
+                <div class="w-full bg-gray-200 rounded-full h-4 dark:bg-gray-700">
+                    <div class="bg-blue-600 h-4 rounded-full" :style="`width: ${progress}%`"></div>
+                </div>
+            </div>
+
+            <div x-show="!uploading" x-cloak>
+                <input wire:model="form.image" class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none file:!bg-blue-600" aria-describedby="file_input_help" id="file_input" type="file">
+                <p class="mt-1 text-sm text-gray-500 dark:text-gray-300" id="file_input_help">SVG, PNG, JPG or GIF (MAX. 800x400px).</p>
+            </div>
             <x-input-error for="form.image" />
         </div>
         <x-button class="hidden" type="submit" x-ref="addProductButton"></x-button>
