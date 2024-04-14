@@ -20,7 +20,6 @@ class ProductFactory extends Factory
         $categoryIds = Category::query()->pluck('id')->toArray();
         return [
             'category_id' => $this->faker->numberBetween(min($categoryIds), max($categoryIds)),
-            'image_id' => 1,
             'slug' => $this->faker->slug,
             'name' => $this->faker->words(3, true),
             'price' => $this->faker->numberBetween(100, 10000),
