@@ -20,7 +20,8 @@ return new class extends Migration
             $table->decimal('price')
                 ->default(0);
             $table->string('slug')
-                ->unique();
+                ->unique()
+                ->nullable();
             $table->integer('stock')
             ->default(0);
             $table->text('description')
