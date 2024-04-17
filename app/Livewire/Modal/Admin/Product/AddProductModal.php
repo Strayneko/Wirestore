@@ -21,6 +21,11 @@ class AddProductModal extends ModalComponent
         $this->productService = new ProductService();
     }
 
+    public function mount()
+    {
+        $this->dispatch('modal-product-opened');
+    }
+
     /**
      * Generate unique slug based on product name when product name field updated
      * @return void

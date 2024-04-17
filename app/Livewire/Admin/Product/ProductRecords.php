@@ -3,6 +3,7 @@
 namespace App\Livewire\Admin\Product;
 
 use App\Service\ProductService;
+use Illuminate\Support\Facades\Log;
 use Livewire\Attributes\On;
 use Livewire\Component;
 use Livewire\WithPagination;
@@ -26,6 +27,37 @@ class ProductRecords extends Component
     public function refreshProducts()
     {
         $this->dispatch('$refresh');
+    }
+
+
+    /**
+     * Handle event comes from confirmation box to delete the product
+     * @param string|null $slug
+     * @return void
+     */
+    #[On('product:delete')]
+    public function deleteProduct(?string $slug): void
+    {
+        if(is_null($slug)){
+            Log::error("Cannot proceed to delete the product slug is null.");
+            $this->dispatch('swal:message', title: 'Something went wrong!', message: 'Cannot delete this product, please try again later.', type: 'error');
+            return;
+        }
+
+       $delete = $this->productService->destroy($slug);
+
+        if(is_null($delete)){
+            $this->dispatch('swal:message', title: 'Something went wrong!', message: 'This product is not found..', type: 'error');
+            return;
+        }
+
+        if(!$delete){
+            $this->dispatch('swal:message', title: 'Internal server error!', message: 'Cannot delete this product at the moment, please try again later.', type: 'error');
+            return;
+        }
+
+        $this->dispatch('$refresh');
+        $this->dispatch('swal:message', message: 'Product has been deleted successfully.');
     }
 
     public function render()

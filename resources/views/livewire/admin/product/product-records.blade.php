@@ -9,7 +9,7 @@
                             <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z"/>
                         </svg>
                     </div>
-                    <input type="search" id="default-search" class="block w-full p-2 ps-9 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Product name" required />
+                    <input type="search" class="block w-full p-2 ps-9 text-sm text-gray-900 border border-gray-300 rounded-lg bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Product name" required />
                 </div>
             </form>
 
@@ -30,8 +30,15 @@
             </select>
         </div>
 
-        <div>
-            <button wire:click="$dispatch('openModal', { component: 'modal.admin.product.add-product-modal' })" type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">Add New</button>
+        <div x-data="{isDisabled: false}">
+            <button @click.prevent="isDisabled = true; $dispatch('openModal', { component: 'modal.admin.product.add-product-modal' })"
+                    type="button"
+                    :disabled="isDisabled"
+                    class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800 disabled:bg-gray-500 disabled:cursor-not-allowed"
+                    x-on:modal-product-opened.window="isDisabled = false"
+            >
+                Add New
+            </button>
             <!-- Main modal -->
         </div>
     </div>
@@ -62,7 +69,7 @@
             </thead>
             <tbody>
 
-            @foreach($products as $product)
+            @forelse($products as $product)
                 <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600" wire:key="product-{{ $loop->index }}">
                     <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                         {{ number_format(($products->currentpage()-1) * $products->perpage() + $loop->index + 1) }}
@@ -95,13 +102,22 @@
                                     <a href="#" class="block text-left px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Edit</a>
                                 </li>
                                 <li>
-                                    <a href="#" class="block text-left px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Delete</a>
+                                    <a href="#"
+                                       class="block text-left px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                                       wire:click="$dispatch('swal:confirmation', {eventDispatchName: 'product:delete', slug: @js($product->slug)})"
+                                    >Delete</a>
                                 </li>
                             </ul>
                         </div>
                     </td>
             </tr>
-            @endforeach
+            @empty
+            <tr>
+                <td colspan="6" class="text-center py-5 text-base font-medium">
+                    No product records found...
+                </td>
+            </tr>
+            @endforelse
 
             </tbody>
         </table>
