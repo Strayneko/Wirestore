@@ -47,11 +47,23 @@ class ProductService {
      * @param int|null $id
      * @return \App\Models\Product|null
      */
-    public function findOne(?int $id): ?\App\Models\Product
+    public function findOne(?string $slug): ?\App\Models\Product
     {
-        if(is_null($id)) return null;
+        if(is_null($slug)) return null;
 
-        return new Product();
+        return Product::query()->where('slug', $slug)->first();
+    }
+
+    public function destroy(?string $slug): ?bool
+    {
+        $product = $this->findOne($slug);
+
+        if(is_null($product)){
+            Log::error("Failed to find product with slug = {$slug}.");
+            return null;
+        }
+
+        return $product->delete();
     }
 
     /**
