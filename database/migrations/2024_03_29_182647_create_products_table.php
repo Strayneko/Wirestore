@@ -17,7 +17,7 @@ return new class extends Migration
                 ->constrained()
                 ->cascadeOnDelete();
             $table->string('name');
-            $table->decimal('price')
+            $table->string('price')
                 ->default(0);
             $table->string('slug')
                 ->unique()
@@ -29,7 +29,6 @@ return new class extends Migration
             $table->boolean('is_published')
                 ->default(false);
             $table->timestamps();
-            $table->softDeletes();
         });
     }
 
