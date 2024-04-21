@@ -23,7 +23,7 @@ class ProductRecords extends Component
      * Refresh product records when product:added event fired
      * @return void
      */
-    #[On('product:added')]
+    #[On('product:refresh')]
     public function refreshProducts()
     {
         $this->dispatch('$refresh');
