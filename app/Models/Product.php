@@ -16,7 +16,7 @@ use Illuminate\Support\Facades\Cache;
 #[ObservedBy(ProductObserver::class)]
 class Product extends Model
 {
-    use HasFactory, SoftDeletes, Sluggable;
+    use HasFactory, Sluggable;
 
     protected $guarded = ['id'];
 
@@ -40,6 +40,11 @@ class Product extends Model
 
     public function productImage(): Attribute
     {
+        // Cache default product image
+        if(!Cache::has('default_image')){
+            $image = Image::query()->where('id', 1)->where('product_id', null)->first();
+            Cache::put('default_image', $image, now()->addDay());
+        }
         return Attribute::get(
                 fn () => $this->image ?? Cache::get('default_image'),
             );
@@ -57,5 +62,15 @@ class Product extends Model
                 'source' => 'name'
             ]
         ];
+    }
+
+
+    /**
+     *  Get the route key for the model.
+     * @return string
+     */
+    public function getRouteKeyName(): string
+    {
+        return 'slug';
     }
 }
