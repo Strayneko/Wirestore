@@ -39,9 +39,9 @@ class AddProductModal extends ModalComponent
      * Store product
      * @return void
      */
-    public function addProduct(): void
+    public function saveProduct(): void
     {
-
+        $this->form->isAddMode = true;
         $this->form->validate();
 
         $product = $this->productService->store($this->form);
@@ -52,7 +52,7 @@ class AddProductModal extends ModalComponent
 
         $this->dispatch('swal:message', message: 'Product has been stored successfully.');
         $this->closeModal();
-        $this->dispatch('product:added');
+        $this->dispatch('product:refresh');
     }
 
     /** {@inheritDoc} */
