@@ -14,6 +14,10 @@ document.addEventListener("livewire:navigated", () => {
     initFlowbite();
 });
 
+Livewire.on('product:refresh', () => {
+    // Reinitialize Flowbite components
+    setTimeout(initFlowbite, 500)
+})
 
 /**
  * ===============
