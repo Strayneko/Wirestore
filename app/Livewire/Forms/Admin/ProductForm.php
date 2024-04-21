@@ -2,16 +2,21 @@
 
 namespace App\Livewire\Forms\Admin;
 
+use Illuminate\Validation\Rule;
 use Livewire\Attributes\Validate;
 use Livewire\Features\SupportFileUploads\TemporaryUploadedFile;
 use Livewire\Form;
 
 class ProductForm extends Form
 {
+    public $isAddMode = false;
+
+    public ?int $productId = null;
+
     #[Validate('required|min:5|max:255', as: 'product name')]
     public ?string $name = null;
 
-    #[Validate('required|min:3|unique:products', as: 'product slug')]
+    #[Validate(as: 'product slug')]
     public ?string $slug = null;
 
     #[Validate('required|min:5', as: 'product description')]
@@ -23,11 +28,15 @@ class ProductForm extends Form
     #[Validate('required|numeric|min:1')]
     public ?string $stock = null;
 
-    public bool $isPublished = true;
-
-    #[Validate('required|file|image|mimes:jpg,png,jpeg|max:4096')]
+    #[Validate('nullable|required_if:isAddMode,true|file|image|mimes:jpg,png,jpeg|max:4096', message: ['required_if' => 'The image filed is required.'])]
     public ?TemporaryUploadedFile $image = null;
 
+    public bool $isPublished = true;
+
+    /**
+     * Reset livewire model
+     * @return void
+     */
     public function resetForm(): void
     {
         $this->reset(
@@ -40,5 +49,16 @@ class ProductForm extends Form
             'image',
             'isPublished',
         );
+    }
+
+    /**
+     * Set validation rules
+     * @return array[]
+     */
+    public function rules(): array
+    {
+        return [
+            'slug' => ['required', 'min:3', Rule::unique('products', 'slug')->ignore($this->productId)],
+        ];
     }
 }
