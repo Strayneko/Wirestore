@@ -43,7 +43,13 @@
         </div>
     </div>
 
-    <div class="relative overflow-x-visible shadow-md sm:rounded-lg">
+    <div class="relative overflow-x-visible shadow-md sm:rounded-lg"
+         x-data="{
+            openModal(component, arguments = {}){
+                $wire.dispatch('openModal', { component, arguments })
+            }
+         }"
+    >
         <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
             <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
             <tr>
@@ -83,8 +89,8 @@
                     <td class="px-6 py-4">
                         ${{ number_format($product->price) }}
                     </td>
-                        <td class="px-6 py-4">
-                        {{ number_format($product->stock) }}
+                        <td @class(['px-6 py-4', 'text-red-500 font-medium' => $product->stock == 0])>
+                        {{ $this->productStock($product->stock) }}
                     </td>
                     <td class="px-6 py-4">
                         <button id="options-button-{{ $loop->iteration }}" data-dropdown-toggle="dropdown-{{ $loop->iteration }}" autohide class="text-white text-sm bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-2 py-1.5 text-center inline-flex items-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800" type="button">Options<svg class="w-2.5 h-2.5 ms-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 10 6">
@@ -98,12 +104,13 @@
                                 <li>
                                     <a href="#"
                                        class="block text-left px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
+                                       @click.prevent="openModal('modal.admin.product.detail-product-modal', { product: @js($product->slug)})"
                                     >Detail</a>
                                 </li>
                                 <li>
                                     <a href="#"
                                        class="block text-left px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-                                       wire:click="$dispatch('openModal', { component: 'modal.admin.product.edit-product-modal', arguments: { product: @js($product->slug) } })"
+                                       @click.prevent="openModal('modal.admin.product.edit-product-modal', { product: @js($product->slug) })"
                                     >Edit</a>
                                 </li>
                                 <li>

@@ -60,6 +60,18 @@ class ProductRecords extends Component
         $this->dispatch('swal:message', message: 'Product has been deleted successfully.');
     }
 
+    /**
+     * Get product stock and return out of stock when product stock is zero
+     * @param string|null $stock
+     * @return string
+     */
+    public function productStock(?string $stock): string
+    {
+        if($stock <= 0) return 'Out of stock';
+
+        return number_format($stock);
+    }
+
     public function render()
     {
         $products = $this->productService->fetchProducts();
