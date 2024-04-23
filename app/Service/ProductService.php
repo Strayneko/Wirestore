@@ -149,7 +149,9 @@ class ProductService {
      */
     public function deleteImage(?Image $image): void
     {
-        if(is_null($image)) return;
+        $isDefaultImage = $image?->id === 1;
+        if(is_null($image) || $isDefaultImage) return;
+        
         try{
             if($this->getStorageClass()->exists($image->full_path)){
                 $this->getStorageClass()->delete($image->full_path);
