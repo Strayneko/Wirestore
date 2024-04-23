@@ -25,7 +25,7 @@ class ProductForm extends Form
     #[Validate('required|numeric|min:100')]
     public ?string $price = null;
 
-    #[Validate('required|numeric|min:1')]
+    #[Validate('required|numeric|min:0')]
     public ?string $stock = null;
 
     #[Validate('nullable|required_if:isAddMode,true|file|image|mimes:jpg,png,jpeg|max:4096', message: ['required_if' => 'The image filed is required.'])]
