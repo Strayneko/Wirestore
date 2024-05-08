@@ -24,11 +24,19 @@ class ProductRecords extends Component
      * @return void
      */
     #[On('product:refresh')]
-    public function refreshProducts()
+    public function refreshProducts(): void
     {
         $this->dispatch('$refresh');
     }
 
+    /**
+     * Refresh product record every paginator page changed
+     * @return void
+     */
+    public function updatingPaginators(): void
+    {
+        $this->dispatch('product:refresh');
+    }
 
     /**
      * Handle event comes from confirmation box to delete the product
