@@ -18,6 +18,9 @@
                     <x-nav-link href="{{ route('admin.products') }}" :active="request()->routeIs('admin.products')" wire:navigate>
                         {{ __('Products') }}
                     </x-nav-link>
+                    <x-nav-link href="{{ route('admin.categories') }}" :active="request()->routeIs('admin.categories')" wire:navigate>
+                        {{ __('Categories') }}
+                    </x-nav-link>
                 </div>
             </div>
 
@@ -139,6 +142,9 @@
             </x-responsive-nav-link>
             <x-responsive-nav-link href="{{ route('admin.products') }}" wire:navigate :active="request()->routeIs('admin.products')">
                 {{ __('Products') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link href="{{ route('admin.categories') }}" wire:navigate :active="request()->routeIs('admin.categories')">
+                {{ __('Categories') }}
             </x-responsive-nav-link>
         </div>
 
