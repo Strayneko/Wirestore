@@ -13,6 +13,7 @@ export default {
     ],
     safelist: [
         'lg:max-w-3xl',
+        'lg:max-w-2xl',
     ],
     theme: {
         screen: {
