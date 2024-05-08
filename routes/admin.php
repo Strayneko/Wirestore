@@ -14,4 +14,5 @@ Route::middleware([
     })->name('dashboard');
 
     Route::get('products',[\App\Http\Controllers\Admin\ProductController::class, 'index'])->name('products');
+    Route::get('categories',[\App\Http\Controllers\Admin\CategoryController::class, 'index'])->name('categories');
 });
