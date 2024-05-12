@@ -19,6 +19,11 @@ Livewire.on('product:refresh', () => {
     setTimeout(initFlowbite, 500)
 })
 
+Livewire.on('category:refresh', () => {
+    // Reinitialize Flowbite components
+    setTimeout(initFlowbite, 500)
+})
+
 /**
  * ===============
  * Sweetalert 2
