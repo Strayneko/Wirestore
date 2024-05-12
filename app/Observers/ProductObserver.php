@@ -3,7 +3,6 @@
 namespace App\Observers;
 
 use App\Models\Product;
-use Illuminate\Support\Str;
 
 class ProductObserver
 {
@@ -12,7 +11,7 @@ class ProductObserver
      */
     public function creating(Product $product): void
     {
-       $newProductName = $this->cleanProductName($product->name);
+       $newProductName = cleanAndTitleizeString($product->name);
        $product->name = $newProductName;
     }
 
@@ -46,15 +45,5 @@ class ProductObserver
     public function forceDeleted(Product $product): void
     {
         //
-    }
-
-    private function cleanProductName(?string $name): ?string
-    {
-        if(is_null($name)) return null;
-
-        return Str::of($name)
-            ->trim()
-            ->title()
-            ->toString();
     }
 }
