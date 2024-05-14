@@ -18,9 +18,12 @@ class CategoryObserver
     /**
      * Handle the Category "updated" event.
      */
-    public function updated(Category $category): void
+    public function updating(Category $category): void
     {
-        //
+        if($category->isDirty('name')) {
+            $newCategoryName = cleanAndTitleizeString($category->name);
+            $category->name = $newCategoryName;
+        }
     }
 
     /**
