@@ -41,7 +41,7 @@ document.addEventListener('swal:message', (e) => {
 document.addEventListener('swal:confirmation', (e) => {
     Swal.fire({
         title: "Are you sure?",
-        text: "You won't be able to revert this!",
+        text: e.detail.text || "You won't be able to revert this!",
         icon: "warning",
         showCancelButton: true,
         cancelButtonColor: "#3085d6",

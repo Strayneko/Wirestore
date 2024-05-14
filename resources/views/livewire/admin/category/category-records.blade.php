@@ -88,7 +88,7 @@
                                 <li>
                                     <a href="#"
                                        class="block text-left px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white"
-                                       wire:click="$dispatch('swal:confirmation', {eventDispatchName: 'category:delete', slug: @js($category->slug)})"
+                                       wire:click="$dispatch('swal:confirmation', {eventDispatchName: 'category:delete', slug: @js($category->slug), text: `Products related to this category will also be deleted!`})"
                                     >Delete</a>
                                 </li>
                             </ul>
