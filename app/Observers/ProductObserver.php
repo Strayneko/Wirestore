@@ -16,11 +16,14 @@ class ProductObserver
     }
 
     /**
-     * Handle the Product "updated" event.
+     * Handle the Product "updating" event.
      */
-    public function updated(Product $product): void
+    public function updating(Product $product): void
     {
-        //
+        if($product->isDirty('name')){
+            $newProductName = cleanAndTitleizeString($product->name);
+            $product->name = $newProductName;
+        }
     }
 
     /**
