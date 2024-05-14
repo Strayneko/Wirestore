@@ -31,6 +31,9 @@ class ProductForm extends Form
     #[Validate('nullable|required_if:isAddMode,true|file|image|mimes:jpg,png,jpeg|max:4096', message: ['required_if' => 'The image filed is required.'])]
     public ?TemporaryUploadedFile $image = null;
 
+    #[Validate(['required', 'exists:categories,id'], as: 'product category')]
+    public ?string $category = null;
+
     public bool $isPublished = true;
 
     /**
