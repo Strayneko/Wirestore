@@ -45,13 +45,8 @@ class CategoryRecords extends Component
 
         $delete = $this->categoryService->destroy($slug);
 
-        if(is_null($delete)){
-            $this->dispatch('swal:message', title: 'Something went wrong!', message: 'This category is not found..', type: 'error');
-            return;
-        }
-
-        if(!$delete){
-            $this->dispatch('swal:message', title: 'Internal server error!', message: 'Cannot delete this category at the moment, please try again later.', type: 'error');
+        if(!$delete['status']){
+            $this->dispatch('swal:message', title: 'Something went wrong!', message: $delete['message'], type: 'error');
             return;
         }
 
