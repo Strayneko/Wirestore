@@ -79,20 +79,38 @@ class CategoryService {
      * @param string|null $slug
      * @return bool|null
      */
-    public function destroy(?string $slug): ?bool
+    public function destroy(?string $slug): array
     {
         $category = $this->findOne($slug);
 
         if (is_null($category)) {
             Log::error("Failed to find category with slug = {$slug}.");
-            return null;
+            return [
+                'status' => false,
+                'message' => 'Category is not found.',
+            ];
         }
+
+        if($category->products()->exists()){
+            Log::error("Cannot delete a category that has a product.");
+            return [
+                'status' => false,
+                'message' => 'Cannot delete a category that has a product.',
+            ];
+        }
+
         try{
-            return $category->delete();
+            $category->delete();
+            return [
+                'status' => true,
+            ];
         }catch(\Exception $e){
             Log::error($e->getMessage());
 
-            return null;
+            return [
+                'status' => false,
+                'message' => 'Cannot delete this category at the moment, please try again later.',
+            ];
         }
 
     }
