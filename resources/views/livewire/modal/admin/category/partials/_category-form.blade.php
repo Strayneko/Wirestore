@@ -21,6 +21,6 @@
                   class="bg-blue-600 hover:bg-blue-800 hover:text-white focus:bg-blue-800 active:bg-blue-600 disabled:bg-gray-500 disabled:cursor-not-allowed"
                   wire:loading.attr="disabled"
                   wire:target="form.slug, saveCategory"
-        >Add Category</x-button>
+        >{{ $type }} Category</x-button>
     </div>
 </x-slot:footer>
