@@ -32,7 +32,7 @@ class ProductService {
     }
 
     /**
-     * TODO: Update product with the specified product model
+     * Update product with the specified product model
      * @param \App\Models\Product|null $product
      * @return bool
      */
@@ -151,7 +151,7 @@ class ProductService {
     {
         $isDefaultImage = $image?->id === 1;
         if(is_null($image) || $isDefaultImage) return;
-        
+
         try{
             if($this->getStorageClass()->exists($image->full_path)){
                 $this->getStorageClass()->delete($image->full_path);
@@ -186,7 +186,7 @@ class ProductService {
         $product->slug = $data->slug;
         $product->price = $data->price;
         $product->stock = $data->stock;
-        $product->category_id = 1;
+        $product->category_id = $data->category;
         $product->description = $data->description;
         $product->is_published = $data->isPublished;
 
