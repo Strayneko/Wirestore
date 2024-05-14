@@ -10,6 +10,19 @@
         <x-input-error for="form.slug" />
     </div>
 
+    <div>
+        <x-form.select id="categories"
+                       label="Category"
+                       model="form.category"
+                       required
+        >
+            <option value="null">Select a category</option>
+            @foreach($categories as $category)
+                <option value="{{ $category->id }}">{{ $category->name }}</option>
+            @endforeach
+        </x-form.select>
+    </div>
+
     <div class="space-y-1">
         <x-label value="Price (RP)" required />
         <x-input class="w-full" type="number" step="1" min="0" placeholder="10,000" wire:model="form.price" />
