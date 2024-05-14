@@ -3,7 +3,9 @@
 namespace App\Livewire\Modal\Admin\Product;
 
 use App\Livewire\Forms\Admin\ProductForm;
+use App\Models\Category;
 use App\Service\ProductService;
+use Illuminate\Database\Eloquent\Collection;
 use Livewire\WithFileUploads;
 use LivewireUI\Modal\ModalComponent;
 use App\Models\Product;
@@ -15,6 +17,8 @@ class EditProductModal extends ModalComponent
     public ?Product $product = null;
 
     public ProductForm $form;
+
+    public Collection $categories;
 
     private ProductService $productService;
 
@@ -31,6 +35,9 @@ class EditProductModal extends ModalComponent
        $this->form->stock = $this->product->stock;
        $this->form->productId = $this->product->id;
        $this->form->description = $this->product->description;
+       $this->form->category = $this->product->category_id;
+
+       $this->categories = Category::all();
     }
 
     /**

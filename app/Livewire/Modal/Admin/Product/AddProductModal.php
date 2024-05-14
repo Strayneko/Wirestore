@@ -3,7 +3,9 @@
 namespace App\Livewire\Modal\Admin\Product;
 
 use App\Livewire\Forms\Admin\ProductForm;
+use App\Models\Category;
 use App\Service\ProductService;
+use Illuminate\Database\Eloquent\Collection;
 use Livewire\Attributes\On;
 use Livewire\WithFileUploads;
 use LivewireUI\Modal\ModalComponent;
@@ -13,6 +15,8 @@ class AddProductModal extends ModalComponent
     use WithFileUploads;
 
     public ProductForm $form;
+
+    public Collection $categories;
 
     private ProductService $productService;
 
@@ -24,6 +28,7 @@ class AddProductModal extends ModalComponent
     public function mount()
     {
         $this->dispatch('modal-product-opened');
+        $this->categories = Category::all();
     }
 
     /**
