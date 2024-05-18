@@ -1,6 +1,6 @@
 <header class="py-4 shadow-sm bg-white">
     <div class="container flex items-center justify-between">
-        <a href="{{ route('home') }}" class="uppercase">
+        <a href="{{ route('home.index') }}" class="uppercase">
            <span class="font-bold text-3xl text-primary">wire</span>
            <span class="font-bold text-3xl">store</span>
         </a>

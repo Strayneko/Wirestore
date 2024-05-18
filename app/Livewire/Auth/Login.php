@@ -27,7 +27,7 @@ class Login extends Component
             return;
         }
 
-        $redirectRouteName = auth()->user()->isAdmin ? 'admin.dashboard' : 'home';
+        $redirectRouteName = auth()->user()->isAdmin ? 'admin.dashboard' : 'home.index';
         $this->redirect(route($redirectRouteName), true);
     }
 
