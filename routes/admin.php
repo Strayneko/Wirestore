@@ -6,6 +6,7 @@ Route::middleware([
     'auth:sanctum',
     config('jetstream.auth_session'),
     'verified',
+    \App\Http\Middleware\IsAdmin::class,
 ])->prefix('admin')
   ->name('admin.')
   ->group(function () {

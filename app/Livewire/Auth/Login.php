@@ -22,13 +22,13 @@ class Login extends Component
         ];
         $checkAuth = Auth::attempt($credentials);
 
-        if(!$checkAuth)
-        {
+        if(!$checkAuth){
             $this->addError('login','Wrong email or password.');
             return;
         }
 
-        $this->redirect(route('admin.dashboard'), true);
+        $redirectRouteName = auth()->user()->isAdmin ? 'admin.dashboard' : 'home';
+        $this->redirect(route($redirectRouteName), true);
     }
 
     public function render()

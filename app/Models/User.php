@@ -3,7 +3,10 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use App\Enums\UserRoleType;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Fortify\TwoFactorAuthenticatable;
@@ -62,4 +65,15 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    public function IsAdmin(): Attribute
+    {
+        return Attribute::get(fn () => $this->userRole?->id === UserRoleType::Admin);
+    }
+
+    public function userRole(): BelongsTo
+    {
+        return $this->belongsTo(UserRole::class);
+    }
+
 }
