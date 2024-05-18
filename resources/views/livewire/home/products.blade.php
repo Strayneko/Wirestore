@@ -4,7 +4,7 @@
         @foreach($products as $product)
             <div class="bg-white shadow rounded overflow-hidden group">
                 <div class="relative">
-                    <img src="{{ asset($product->productImage->full_path)  }}" alt="product 1" class="w-full">
+                    <img src="{{ asset($product->productImage->full_path)  }}" alt="product 1" class="w-full aspect-video">
                     <div class="absolute inset-0 bg-black bg-opacity-40 flex items-center
                         justify-center gap-2 opacity-0 group-hover:opacity-100 transition">
                         <a href="#"
